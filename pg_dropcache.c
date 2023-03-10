@@ -46,9 +46,13 @@ pg_drop_rel_cache(PG_FUNCTION_ARGS)
 		PG_RETURN_VOID();
 	}
 
-	forkNum = PG_ARGISNULL(1) ? 0 : forkname_to_number(text_to_cstring(PG_GETARG_TEXT_P(1)));
-	for (; forkNum <= MAX_FORKNUM; ++forkNum)
-		DropRelFileNodeBuffers(rnode, forkNum, 0);
+/*
+        forkNum = PG_ARGISNULL(1) ? 0 : forkname_to_number(text_to_cstring(PG_GETARG_TEXT_P(1)));
+        for (; forkNum <= MAX_FORKNUM; ++forkNum)
+                DropRelFileNodeBuffers(rnode, forkNum, 1, 0);
+*/
 
+    DropRelFileNodesAllBuffers(&rnode, 1);
+    
 	PG_RETURN_VOID();
 }
